@@ -18,7 +18,18 @@ grad = zeros(size(theta));
 %               derivatives of the cost w.r.t. each parameter in theta
 
 
+h = sigmoid(X*theta);
 
+% separate the values for j >= 1
+thetareg = [0; theta(2:size(theta))];
+
+% borrow cost and grad from costFunction
+cost = costFunction(theta, X, y);
+%[cost_zero, gradient_zero] = costFunction(theta(1), X(1), y);
+
+% count cost and grad
+J = cost + lambda / (2*m) * sum(thetareg .^ 2);
+grad = (1/m) * (X' * (h - y) + lambda * thetareg);
 
 
 
