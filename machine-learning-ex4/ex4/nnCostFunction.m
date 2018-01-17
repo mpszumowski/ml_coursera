@@ -89,21 +89,19 @@ J = J + lambda / (2*m) ...
     * (sum(sum(Theta1_reg' * Theta1_reg .* eye(size(Theta1_reg, 2)))) ...
        + sum(sum(Theta2_reg' * Theta2_reg .* eye(size(Theta2_reg, 2)))));
     
+Delta1 = 0;
+Delta2 = 0; 
+for i = 1:size(X, 1);
+     
+  d3 = (a3(i, :) - y_matrix(i, :))';
+  d2 = (Theta2_reg' * d3) .* sigmoidGradient(z2(i, :))';
+  Delta1 = Delta1 + d2 * a1(i,:);
+  Delta2 = Delta2 + d3 * a2(i,:);
     
-% for i = 1:size(X, 1);
-  
-%  d3 = a3(i, :) - y(i, :);
-%  d2 = d3*Theta2 .* a2(i, :) .* (1 - a2(i, :));
-  
-  
-  
-  
-  
-  
-  
-% endfor;
+endfor;
 
-
+Theta1_grad = (1/m) * Delta1;
+Theta2_grad = (1/m) * Delta2;
 
 
 
