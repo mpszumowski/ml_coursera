@@ -100,8 +100,8 @@ for i = 1:size(X, 1);
     
 endfor;
 
-Theta1_grad = (1/m) * Delta1;
-Theta2_grad = (1/m) * Delta2;
+Theta1_grad = (1/m) * Delta1 + (lambda/m) * [zeros(size(Theta1_reg), 1), Theta1_reg];
+Theta2_grad = (1/m) * Delta2 + (lambda/m) * [zeros(size(Theta2_reg), 1), Theta2_reg];
 
 
 
