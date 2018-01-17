@@ -62,11 +62,37 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% forward propagation
+a1 = [ones(size(X,1), 1), X];
+z2 = a1 * Theta1';
+a2 = [ones(size(X,1), 1), sigmoid(z2)];
+z3 = a2 * Theta2';
+a3 = sigmoid(z3);
+
+% expand the y values into matrix m x num_labels, or into m vectors'
+id = eye(num_labels);
+y_matrix = id(y,:);
+
+% the id multiplication is necessary in order to vectorize the cost function
+% the y_matrix' * log(a3) gives a 10x10 matrix where only the main diagonal
+% reflects the product of y value and the probability at the given output node
+% it would be nonsense and the cause of incorrect J value to sum the
+% whole 10x10 matrix
+J = (-1/m) * sum(sum(id .* (y_matrix' * log(a3)) + id .* ((1 - y_matrix)' * log(1 - a3))));
 
 
-
-
-
+% for i = 1:size(X, 1);
+  
+%  d3 = a3(i, :) - y(i, :);
+%  d2 = d3*Theta2 .* a2(i, :) .* (1 - a2(i, :));
+  
+  
+  
+  
+  
+  
+  
+% endfor;
 
 
 
