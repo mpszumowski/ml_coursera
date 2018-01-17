@@ -73,14 +73,23 @@ a3 = sigmoid(z3);
 id = eye(num_labels);
 y_matrix = id(y,:);
 
-% the id multiplication is necessary in order to vectorize the cost function
+% the id multiplication is necessary in order to vectorize the cost function:
 % the y_matrix' * log(a3) gives a 10x10 matrix where only the main diagonal
-% reflects the product of y value and the probability at the given output node
-% it would be nonsense and the cause of incorrect J value to sum the
-% whole 10x10 matrix
-J = (-1/m) * sum(sum(id .* (y_matrix' * log(a3)) + id .* ((1 - y_matrix)' * log(1 - a3))));
+% reflects the product of y value and the probability at the given output node;
+% it would be nonsensical and cause an incorrect J value to sum all the elements
+% from the 10x10 matrix
 
+J = (-1/m) * sum(sum(id .* (y_matrix' * log(a3)) ...
+    + id .* ((1 - y_matrix)' * log(1 - a3))));
 
+% w/ regularization
+Theta1_reg = Theta1(:, 2:end);
+Theta2_reg = Theta2(:, 2:end);
+J = J + lambda / (2*m) ... 
+    * (sum(sum(Theta1_reg' * Theta1_reg .* eye(size(Theta1_reg, 2)))) ...
+       + sum(sum(Theta2_reg' * Theta2_reg .* eye(size(Theta2_reg, 2)))));
+    
+    
 % for i = 1:size(X, 1);
   
 %  d3 = a3(i, :) - y(i, :);
